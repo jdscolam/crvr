@@ -6,8 +6,8 @@ export class AppViewModel {
   configureRouter(config, router) {
     this.router = router;
     config.map([
-      { route: '', name: 'hello', moduleId: PLATFORM.moduleName('page-hello', 'hello') },
-      { route: 'about', name: 'about', moduleId: PLATFORM.moduleName('page-about', 'about') },
+      { route: '', name: 'hello', moduleId: PLATFORM.moduleName('./views/hello/page-hello', 'hello') },
+      { route: 'about', name: 'about', moduleId: PLATFORM.moduleName('./views/about/page-about', 'about') },
     ]);
   }
 }
