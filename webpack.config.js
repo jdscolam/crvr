@@ -16,10 +16,21 @@ module.exports = {
   resolve: {
     extensions: [".js"],
     modules: ["src", "node_modules"].map(x => path.resolve(x)),
+    alias:{
+      '$': path.resolve(__dirname, 'node_modules/jquery/dist/jquery.js'),
+      'jquery': path.resolve(__dirname, 'node_modules/jquery/dist/jquery.js')
+    }
   },
+
+ devtool: 'source-map',
 
   module: {
     rules: [
+      {
+        enforce: 'pre',
+        test: /\.js$/,
+        loader: "source-map-loader"
+      },
       {
         test: /\.(js)$/,
         loaders: 'babel-loader',
@@ -28,14 +39,20 @@ module.exports = {
           plugins: ['transform-decorators-legacy' ]
         }
       },
-      { test: /\.css$/i, 
-        use: [
-          "style-loader", 
-          "css-loader"
-        ] 
+      {
+        test: /\.css$/i,
+        loader: 'css-loader',
+        issuer: /\.html?$/i
+      },
+      {
+        test: /\.css$/i,
+        loader: ['style-loader', 'css-loader'],
+        issuer: /\.[tj]s$/i
       },
       { test: /\.html$/i, 
-        use: "html-loader" }
+        use: "html-loader" },
+      { test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/, use:"url-loader?limit=10000&mimetype=application/font-woff" },
+      { test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, use: "file-loader" }
     ]
   },  
 
@@ -48,5 +65,5 @@ module.exports = {
         template: '!html-webpack-plugin/lib/loader!index.html',
         filename: 'index.html'
     }), 
-  ],
+  ]
 };
