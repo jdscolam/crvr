@@ -1,5 +1,6 @@
 import { inject, PLATFORM } from 'aurelia-framework';
 import { Router, Redirect } from 'aurelia-router';
+import { CrvrConfig } from './crvrConfig';
 
 @inject(Router)
 export class AppViewModel {
@@ -18,22 +19,16 @@ export class AppViewModel {
 }
 
 class AuthorizeStep {
-  constructor(){
-    this.clientId = encodeURIComponent('winmnnXnPnH6xxm5XZ6DREh5l3mEFAXs');
-    this.redirectUri = encodeURIComponent('http://localhost:8080/#/auth/');
-    this.scope = encodeURIComponent('basic stream write_post follow update_profile presence messages');
-    this.responseType = encodeURIComponent('token');
-  }
 
   run(navigationInstruction, next) {
     if (navigationInstruction.getAllInstructions().some(i => i.config.settings.auth)) {
       var currentToken = localStorage.pnutToken;
       if (!currentToken) {
         var loginUrl = 'https://pnut.io/oauth/authenticate?'
-        + 'client_id=' + this.clientId
-        + '&redirect_uri=' + this.redirectUri
-        + '&scope=' + this.scope
-        + '&response_type=' + this.responseType;
+        + 'client_id=' + CrvrConfig.clientId
+        + '&redirect_uri=' + CrvrConfig.redirectUri
+        + '&scope=' + CrvrConfig.scope
+        + '&response_type=' + CrvrConfig.responseType;
 
         return next.cancel(new Redirect(loginUrl));
       }
