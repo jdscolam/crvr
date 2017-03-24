@@ -3,6 +3,11 @@
   <head>
     <meta charset="utf-8">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Fix for IE bug with page reload when changing hash in url after redirect -->
+    <script type="text/javascript">
+      window.location.hash = window.location.hash;
+    </script>
   </head>
   <body aurelia-app="main">
   </body>
